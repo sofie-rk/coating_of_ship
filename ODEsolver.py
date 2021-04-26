@@ -21,7 +21,7 @@ def model(z, tau):
 def ODEsolver():
 
     # Initial conditions
-    init = [0, 0]
+    init = [0, 10**(-15)]
 
     n = 100
 
