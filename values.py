@@ -11,16 +11,13 @@ r_TBT = 4.2 * 10**(-9) * 10**4  # [kg TBT/m^2 day]
 V_p = 0.7   # volume fraction of polymer
 V_c = 0.3   # volume fraction of pigment
 
-D_CuCl = 2.0 * 10**(-12) * 3600 * 24    # [m2/s] diffusivity of CuCl2 through the leached layer
+D_CuCl = 2.0 * 10**(-12) * 3600 * 24    # [m2/day] diffusivity of CuCl2 through the leached layer
 
 C_CuCl_s = 8.6 * 10**(-2)   # [mol/m3] concentration of CuCl- at polymer/leached layer interface
-
-alpha = (C_CuCl_s)*M_Cu2O/rho_c
-
-c = 10**(-10) + M_TBT*M_Cu2O/M_unit * rho_p*V_p*D_CuCl/(r_TBT*2*V_c*rho_c) * C_CuCl_s/10**(-10)
-d = 10**(-3) + 0.02*(M_TBT*M_Cu2O/M_unit * (rho_p*V_p*D_CuCl)/(r_TBT*2*V_c*rho_c) * (C_CuCl_s-0)/(10**(-3)*L_F-0*L_F))
 
 
 tf = L_F*M_TBT*rho_p*V_p/(r_TBT*M_unit)
 
+
+const = (M_TBT*M_Cu2O)/M_unit * (rho_p*V_p*D_CuCl)/(r_TBT*2*V_c*rho_c) * C_CuCl_s/L_F
 
