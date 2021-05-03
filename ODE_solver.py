@@ -37,7 +37,7 @@ def RK4(y0, t0, T, f, Nmax):
 
     return np.array(t_sol), np.array(y_sol)
 
-n = 8
+n = 7
 
 tau_0, tau_T = 0, 1
 z0 = np.array([0, 10**(-n)]) # zp_0 and zc_0

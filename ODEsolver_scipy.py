@@ -43,8 +43,6 @@ def ODEsolver():
         zp_list[i] = z[1][0]
         zc_list[i] = z[1][1]
 
-        print(z)
-
         # New init conditions
         init = z[1]
 
@@ -54,8 +52,6 @@ def ODEsolver():
     plt.legend()
     plt.show()
 
-    #print(zp_list)
-    #print(zc_list)
 
 ODEsolver()
 
