@@ -1,7 +1,7 @@
 import numpy as np
 from numpy.linalg import norm
 import matplotlib.pyplot as plt
-from values import*
+from values import *
 
 class EmbeddedExplicitRungeKutta:
     def __init__(self, a, b, c,  bhat=None, order=None):
@@ -44,9 +44,6 @@ class EmbeddedExplicitRungeKutta:
             t, y = ts[-1], ys[-1]
             N += 1
             
-#             print("---------------------------------------------------")
-#             print(f"Compute tentative step N = {N} starting from t = {t} with dt = {dt}")
-            
             # Compute stages derivatives k_j
             for j in range(s):
                 t_j = t + c[j]*dt
@@ -61,34 +58,42 @@ class EmbeddedExplicitRungeKutta:
             for j in range(s):
                 dy += b[j]*ks[j]
 
-            if bhat is None:
-                ys.append(y + dt*dy)
-                ts.append(t + dt)
+            dyhat = np.zeros_like(y, dtype=np.double)
+            for j in range(s):
+                dyhat += bhat[j]*ks[j]
+
+            # Error estimate
+            err = dt*norm(dy - dyhat)
+
+            # Accept time-step
+            # if True:
+            if err <= tol:
+                y_next = y + dt*dyhat
+                if y_next[0] > 1:
+                    y_next[0] = 1
+                if y_next[1] > 1:
+                    y_next[1] = 1
+                ys.append(y_next)
+
+                t_next = t + dt
+                if t_next > 1:
+                    t_next = 1
+                ts.append(t_next)
+            else: # rejected
+                print(f"Step is rejected at t = {t} with err = {err}")
+                N_rej += 1
+                ys_rej.append(y + dt*dyhat)
+                ts_rej.append(t + dt)
+            
+            # New step size
+            if t>0.8 and t<0.9:
+                # make sure step size is small enough at the end point as well
+                dt = 10**(-5)
             else:
-                dyhat = np.zeros_like(y, dtype=np.double)
-                for j in range(s):
-                    dyhat += bhat[j]*ks[j]
-
-                # Error estimate
-#                 err = max(dt*norm(dy - dyhat), norm(y)*eps)
-                err = dt*norm(dy - dyhat)
-
-                # Accept time-step
-#                 if True:
-                if err <= tol:
-                    ys.append(y + dt*dyhat)
-                    ts.append(t + dt)
-                else:
-                    print(f"Step is rejected at t = {t} with err = {err}")
-                    N_rej += 1
-                    ys_rej.append(y + dt*dyhat)
-                    ts_rej.append(t + dt)
-                
-                # New step size
                 dt = min(dt*min(facmax, max(facmin, fac*(tol/err)**(1/(order)))),abs(T-t))
-#                 dt = 0.8*(tol/err)**(1/(order))*dt
-#                 print(f"New dt = {dt}")
-#                 print(f"Error is err = {err}")
+                # dt = 0.8*(tol/err)**(1/(order))*dt
+            
+
         
         print(f"Finishing time-stepping reaching t = {ts[-1]} with final time T = {T}")
         print(f"Used {N} steps out of {Nmax} with {N_rej} being rejected")
@@ -99,7 +104,7 @@ class EmbeddedExplicitRungeKutta:
 # end of class EmbeddedExplicitRungeKutta
 
 
-### FEHLBERG-RUNGEKUTTA DEF
+### FEHLBERG-RUNGEKUTTA BUTCHER TABLEAU
 a =  np.array([[0.0, 0,   0,   0,   0],
                        [1/2, 0,   0,   0,   0],
                        [0, 1/2,   0,   0,   0],
@@ -143,10 +148,10 @@ z0 = np.array([0, 10**(-n)])
 
 # Initial time, stop time
 t0, T = 0, 1
-Nmax = 10**(n-1)
+Nmax = 10**(n+2)
 
 # Tolerance in adaptive method
-tol = 1.0e-3
+tol = 1.0e-2
 
 
 fehlberg = EmbeddedExplicitRungeKutta(a, b, c, bhat, order)
@@ -154,7 +159,7 @@ fehlberg = EmbeddedExplicitRungeKutta(a, b, c, bhat, order)
 
 ts, ys = fehlberg(z0, t0, T, model, Nmax, tol)
 
-plt.plot(ts, ys, '-o')
+plt.plot(ts, ys)
 plt.legend(["$z_p$", "$z_c$"])
 plt.xlabel("Tau")
 plt.show()
