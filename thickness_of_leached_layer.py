@@ -1,4 +1,4 @@
-from problem5 import ys, ts
+from conversion_vs_tau import ys, ts
 from values import L_F
 
 import matplotlib.pyplot as plt
