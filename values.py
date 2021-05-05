@@ -37,18 +37,18 @@ u_ship = 15 * 0.514444          # [m/s]
 D_CuCl_sw = 0.9 * 10**(-9) * seconds_in_a_day     # [m2/day]
 
 Re = L_ship * u_ship * rho_seawater / mu_seawater # Reynolds number
-print(Re)
 
 k_L = 0.0365*Re**(0.8) * D_CuCl_sw / L_ship
 
-print("k_L: ", k_L)
+Mm_Cl = 35.45                   # [g/mol]
 
-def k1(T):
+
+def k1(temp):
     k0 = 1.63 * seconds_in_a_day           # [mol (mol/m3)**(-1.32) / m2 day]
     Ea = 61.1*1000   # [J/mol]
     R = 8.314        # [J/Kmol]
 
-    return k0 * exp(-Ea / (R*T))
+    return k0 * exp(-Ea / (R*temp))            # [mol (mol/m3)**(-1.32) / m2 day]
 
 k2 = 8      # [(mol/m3)**(-0.43)]
 
