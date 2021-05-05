@@ -3,8 +3,10 @@ from numpy.linalg import norm
 import matplotlib.pyplot as plt
 from values import *
 
+# ADAPTIVE STEP SIZE ODE SOLVER
 class EmbeddedExplicitRungeKutta:
     def __init__(self, a, b, c,  bhat=None, order=None):
+        # Butcher Table
         self.a = a
         self.b = b
         self.c = c
@@ -16,15 +18,14 @@ class EmbeddedExplicitRungeKutta:
         # Extract Butcher table
         a, b, c, bhat, order = self.a, self.b, self.c, self.bhat, self.order
 
-        # Some parameters controlling the time-step choice 
-        # Machine precision
+        # Some parameters controlling the time-step choice (Machine precision)
         eps = 1e-15
         fac = 0.8
         facmax = 5.0
         facmin = 0.1
         err  = 0
         
-        # Stages
+        # Stages (RK method)
         s = len(b)
         ks = [np.zeros_like(y0, dtype=np.double) for s in range(s)]
 
@@ -36,6 +37,7 @@ class EmbeddedExplicitRungeKutta:
         ts_rej = []
         ys_rej = []
         dt = (T - t0)/Nmax
+
         # Counting steps
         N = 0
         N_rej = 0
@@ -66,19 +68,22 @@ class EmbeddedExplicitRungeKutta:
             err = dt*norm(dy - dyhat)
 
             # Accept time-step
-            # if True:
             if err <= tol:
                 y_next = y + dt*dyhat
+
+                # If conversion is larger than 1, change it to 1
                 if y_next[0] > 1:
                     y_next[0] = 1
                 if y_next[1] > 1:
                     y_next[1] = 1
+
                 ys.append(y_next)
 
                 t_next = t + dt
-                if t_next > 1:
+                if t_next > 1: # If time is larger than 1, change it to 1
                     t_next = 1
                 ts.append(t_next)
+                
             else: # rejected
                 print(f"Step is rejected at t = {t} with err = {err}")
                 N_rej += 1
