@@ -67,6 +67,9 @@ def plot_thickness_simple():
     plt.ylabel("$l_c - l_p$ [mm]")
     plt.show()
 
+plot_conversion_simple()
+plot_thickness_simple()
+
 
 ### RELEASE OF Cu2+
 
@@ -76,7 +79,7 @@ def plot_release_Cu():
 
     for i in range(len(r_Cu2O_simple)):
 
-        r_Cu2O_simple[i] = D_CuCl*C_CuCl_s/(L_F*(X_simple[i][1] - X_simple[i][0])) * M_Cu2O * 10**(9) * 10**(-4) # [micro g/cm2 day]
+        r_Cu2O_simple[i] = D_CuCl*C_CuCl_s/(L_F*(X_simple[i][1] - X_simple[i][0])) * M_Cu * 10**(-4) # [micro g/cm2 day]
     
     plt.plot(tau_simple[1500:-10]*tf, r_Cu2O_simple[1500:-10])
     plt.xlabel("Time [days]")
