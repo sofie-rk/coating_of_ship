@@ -17,6 +17,7 @@ class MODEL:
 
 model = MODEL()
 
+tf_simple = L_F*M_TBT*rho_p*V_p/(r_TBT*M_unit)
 
 # Run method
 fehlberg = EmbeddedExplicitRungeKutta(a, b, c, bhat, order)
@@ -26,15 +27,11 @@ Nmax = 10**(n+8)
 
 
 
-
-
 ### FIRST, solve from tau = 0 to an upper limit
 t0_0, T_0 = 0, 0.8
 z0_0 = np.array([0, 10**(-n)])
 
 ts_0, ys_0 = fehlberg(z0_0, t0_0, T_0, model, Nmax, tol)
-
-
 
 ## SECOND, solve from tau = limit to tau = 1
 t0_1, T_1 = ts_0[-1], 1
@@ -42,50 +39,8 @@ z0_1 = ys_0[-1]
 
 ts_1, ys_1 = fehlberg(z0_1, t0_1, T_1, model, Nmax, tol)
 
+
+## MERGE the two solutions
 tau_simple = np.concatenate((ts_0, ts_1))
 X_simple = np.concatenate((ys_0, ys_1))
 
-def plot_conversion_simple():
-    plt.plot(tau_simple*tf, X_simple)
-    plt.legend(["$X_p$", "$X_c$"])
-    plt.ylabel("Conversion [-]")
-    plt.xlabel("Time [days]")
-    plt.title("Simple model, conversion vs time. Dimensionless model used.")
-    plt.grid(True)
-    plt.show()
-
-
-### THICKNESS OF THE LEACHED LAYER ###
-
-def plot_thickness_simple():
-    thickness = np.zeros(len(tau_simple))
-    for i in range(len(tau_simple)):
-        thickness[i] = (X_simple[i][1] - X_simple[i][0]) * L_F * 10**3  #[mm]
-    plt.plot(tau_simple[:-1]*tf, thickness[:-1])
-    plt.title("Thickness of leached layer. Simple model. Dimensionless model used.")
-    plt.xlabel("Time [days]")
-    plt.ylabel("$l_c - l_p$ [mm]")
-    plt.show()
-
-plot_conversion_simple()
-plot_thickness_simple()
-
-
-### RELEASE OF Cu2+
-
-def plot_release_Cu():
-
-    r_Cu2O_simple = np.zeros(len(tau_simple))
-
-    for i in range(len(r_Cu2O_simple)):
-
-        r_Cu2O_simple[i] = D_CuCl*C_CuCl_s/(L_F*(X_simple[i][1] - X_simple[i][0])) * M_Cu * 10**(-4) # [micro g/cm2 day]
-    
-    plt.plot(tau_simple[1500:-10]*tf, r_Cu2O_simple[1500:-10])
-    plt.xlabel("Time [days]")
-    plt.ylabel(r"Release of $Cu^{2+}$  [$\mu$ g / $cm^2$ day]")
-    plt.show()
-
-
-
-plot_release_Cu()
