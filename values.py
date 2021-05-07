@@ -44,6 +44,7 @@ Mm_Cl = 35.45                   # [g/mol]
 
 
 def k1(temp):
+    t = temp
     k0 = 1.63 * seconds_in_a_day           # [mol (mol/m3)**(-1.32) / m2 day]
     Ea = 61.1*1000   # [J/mol]
     R = 8.314        # [J/Kmol]
