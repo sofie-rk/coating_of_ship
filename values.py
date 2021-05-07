@@ -9,6 +9,7 @@ L_F = 0.55 * 10**(-3)   # [m]
 M_Cu2O = 0.143          # [kg Cu2O/mol]
 M_unit = 0.574          # [kg unit/mol] 
 M_TBT = 0.2897          # [kg TBT/mol]  
+M_Cu = 63.546*10**6     # [micro gram /mol]
 
 r_TBT = 4.2 * 10**(-9) * 10**4  # [kg TBT/m^2 day]
 
