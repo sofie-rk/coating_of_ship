@@ -15,3 +15,10 @@ pH = [8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2,
 p_temperature = interp1d(time, temperatures)
 p_salinity = interp1d(time, salinity)
 p_pH = interp1d(time, pH)
+
+# plt.plot(time, p_temperature(time), label="interpolation")
+# plt.plot(time, temperatures, 'o')
+# plt.legend()
+# plt.xlabel("Time [days]")
+# plt.ylabel("Temperature [K]")
+# plt.show()

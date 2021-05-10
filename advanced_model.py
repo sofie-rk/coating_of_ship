@@ -20,7 +20,9 @@ def r_TBT_advanced(T, pH, sal):
     conc_OH = OH_conc(pH)
     conc_Cl = Cl_conc(sal)
 
-    return (k1(T)*conc_OH**0.32*conc_Cl) / (1 + k2*conc_OH**0.43) * M_TBT
+    r_TBT_a = (k1(T)*conc_OH**0.32*conc_Cl) / (1 + k2*conc_OH**0.43) * M_TBT
+
+    return r_TBT_a
 
 def r_Cu2O_advanced(T, pH, sal, lc, lp):
 
@@ -56,6 +58,8 @@ class ADVANCED_MODEL:
 
         r_TBT = r_TBT_advanced(self.T(t), self.pH(t), self.salinity(t))
         r_Cu2O = r_Cu2O_advanced(self.T(t), self.pH(t), self.salinity(t), lc, lp)
+
+        #t_test = (L_F*M_TBT*rho_p*V_p)/(r_TBT * M_unit)
 
         dlpdt = (M_unit * r_TBT) / (M_TBT * rho_p * V_p)
 
@@ -122,9 +126,9 @@ def thickness_leached_layer_400():
     plt.grid(True)
     plt.show()
 
-plot_conversion_400()
-plot_length_400()
-thickness_leached_layer_400()
+# plot_conversion_400()
+# # plot_length_400()
+# thickness_leached_layer_400()
 
 
 ### THE NEXT 20 DAYS
@@ -168,8 +172,26 @@ def plot_thickness_20():
     plt.show()
 
 
-plot_conversion_20()
-plot_length_20()
-plot_thickness_20()
+# plot_conversion_20()
+# # plot_length_20()
+# plot_thickness_20()
 
 ### 400 + 20 days modeling
+t_1 = t_400[:]
+y_1 = y_400[:]
+
+t_2 = t_20[:] + 400
+y_2 = y_20[:]
+
+t_3 = np.concatenate((t_1, t_2))
+y_3 = np.concatenate((y_1, y_2))
+
+plt.plot(t_3, y_3/L_F)
+plt.legend(["$X_p$", "$X_c$"])
+plt.xlabel("Time [days]")
+plt.ylabel("Conversion [-]")
+plt.grid(True)
+plt.show()
+
+
+
