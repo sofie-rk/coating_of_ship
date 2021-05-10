@@ -17,14 +17,12 @@ class MODEL:
 
 model = MODEL()
 
-tf_simple = L_F*M_TBT*rho_p*V_p/(r_TBT*M_unit)
 
 # Run method
 fehlberg = EmbeddedExplicitRungeKutta(a, b, c, bhat, order)
 tol = 1.0e-15 # Tolerance in adaptive method
 n = 100
 Nmax = 10**(n+8)
-
 
 
 ### FIRST, solve from tau = 0 to an upper limit
