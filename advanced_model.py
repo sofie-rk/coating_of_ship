@@ -15,6 +15,33 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+def r_TBT_advanced(T, pH, sal):
+
+    conc_OH = OH_conc(pH)
+    conc_Cl = Cl_conc(sal)
+
+    return (k1(T)*conc_OH**0.32*conc_Cl) / (1 + k2*conc_OH**0.43) * M_TBT
+
+def r_Cu2O_advanced(T, pH, sal, lc, lp):
+
+    conc_H = H_conc(pH)
+    conc_Cl = Cl_conc(sal)
+
+    conc_CuCl = 1 / (1/2*k_1 + k_L*D_CuCl/(k_L*(lc-lp) + D_CuCl)) * k_Cu2O(T) * conc_H * conc_Cl**2
+    r_Cu2O = k_Cu2O(T)*conc_H*conc_Cl**2 - 1/2 * k_1 * conc_CuCl
+
+    return r_Cu2O
+
+def OH_conc(pH):
+    return (10**(-14 + pH))*1000    # [mol/m3]
+
+def H_conc(pH):
+    return 10**(-pH)*1000           # [mol/m3]
+
+def Cl_conc(sal):
+    return 0.55 * sal * rho_seawater / Mm_Cl    # [mol/m3]
+
+
 class ADVANCED_MODEL:
 
     def __init__(self, T, salinity, pH):
@@ -27,15 +54,8 @@ class ADVANCED_MODEL:
         lp = l[0]
         lc = l[1]
 
-        conc_OH = (10**(-14 + self.pH(t)))*1000                     # [mol/m3]
-        conc_Cl = 0.55 * self.salinity(t) * rho_seawater / Mm_Cl    # [mol/m3]
-        conc_H = 10**(-self.pH(t))*1000                             # [mol/m3]
-
-        r_TBT = (k1(self.T(t))*conc_OH**0.32*conc_Cl) / (1 + k2*conc_OH**0.43) * M_TBT
-
-        conc_CuCl = 1 / (1/2*k_1 + k_L*D_CuCl/(k_L*(lc-lp) + D_CuCl)) * k_Cu2O(self.T(t)) * conc_H * conc_Cl**2
-
-        r_Cu2O = k_Cu2O(self.T(t))*conc_H*conc_Cl**2 - 1/2 * k_1 * conc_CuCl
+        r_TBT = r_TBT_advanced(self.T(t), self.pH(t), self.salinity(t))
+        r_Cu2O = r_Cu2O_advanced(self.T(t), self.pH(t), self.salinity(t), lc, lp)
 
         dlpdt = (M_unit * r_TBT) / (M_TBT * rho_p * V_p)
 
@@ -79,7 +99,6 @@ def plot_conversion_400():
     plt.title("Conversion vs time, advanced model. Normal model used.")
     plt.show()
 
-#plot_conversion_400()
 
 def plot_length_400():
     plt.plot(t_400, y_400*10**3)
@@ -90,7 +109,6 @@ def plot_length_400():
     plt.title("Length of front, advanced model. Normal model used.")
     plt.show()
 
-#plot_length_400()
 
 def thickness_leached_layer_400():
     thickness = np.zeros(len(t_400))
@@ -104,7 +122,9 @@ def thickness_leached_layer_400():
     plt.grid(True)
     plt.show()
 
-#thickness_leached_layer_400()
+plot_conversion_400()
+plot_length_400()
+thickness_leached_layer_400()
 
 
 ### THE NEXT 20 DAYS
@@ -148,8 +168,8 @@ def plot_thickness_20():
     plt.show()
 
 
-# plot_conversion_20()
-# plot_length_20()
-# plot_thickness_20()
+plot_conversion_20()
+plot_length_20()
+plot_thickness_20()
 
 ### 400 + 20 days modeling
