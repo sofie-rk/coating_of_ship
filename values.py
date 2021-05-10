@@ -21,7 +21,10 @@ D_CuCl = 2.0 * 10**(-12) * seconds_in_a_day    # [m2/day] diffusivity of CuCl2 t
 C_CuCl_s = 8.6 * 10**(-2)   # [mol/m3] concentration of CuCl- at polymer/leached layer interface
 
 
-const = (M_TBT*M_Cu2O)/M_unit * (rho_p*V_p*D_CuCl)/(r_TBT*2*V_c*rho_c) * C_CuCl_s/L_F
+def t_f(r_TBT_i):
+    return (L_F*M_TBT*rho_p*V_p)/(r_TBT_i * M_unit)
+
+tf_simple = t_f(r_TBT)
 
 
 
