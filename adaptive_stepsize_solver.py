@@ -116,3 +116,5 @@ c = np.array([0.,
                        1])
 
 order =  4
+
+ODE_solver = EmbeddedExplicitRungeKutta(a, b, c, bhat, order)

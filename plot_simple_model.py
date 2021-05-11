@@ -33,17 +33,17 @@ def plot_thickness_simple():
 ### RELEASE OF Cu2+
 
 def plot_release_Cu():
-
     r_Cu2O_simple = np.zeros(len(tau_simple))
 
     for i in range(len(r_Cu2O_simple)):
 
         r_Cu2O_simple[i] = 2 * D_CuCl*C_CuCl_s/(L_F*(X_simple[i][1] - X_simple[i][0])) * M_Cu * 10**(-4) # [micro g/cm2 day]
     
-    plt.plot(tau_simple[1500:-10]*tf_simple, r_Cu2O_simple[1500:-10])
+    plt.plot(tau_simple[:]*tf_simple, r_Cu2O_simple[:])
     plt.xlabel(x_label_day)
-    plt.ylabel(r"Release of $Cu^{2+}$  [$\mu$ g / $cm^2$ day]")
+    plt.ylabel(release_Cu_label)
     plt.ylim(20, 40)
+    plt.grid(True)
     plt.show()
 
 plot_conversion_simple()

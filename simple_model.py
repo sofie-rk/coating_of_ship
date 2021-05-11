@@ -1,5 +1,4 @@
-from adaptive_stepsize_solver import EmbeddedExplicitRungeKutta
-from adaptive_stepsize_solver import a, b, c, bhat, order
+from adaptive_stepsize_solver import ODE_solver
 
 from values import *
 
@@ -19,7 +18,6 @@ model = MODEL()
 
 
 # Run method
-fehlberg = EmbeddedExplicitRungeKutta(a, b, c, bhat, order)
 tol = 1.0e-15 # Tolerance in adaptive method
 n = 100
 Nmax = 10**(n+8)
@@ -29,13 +27,13 @@ Nmax = 10**(n+8)
 t0_0, T_0 = 0, 0.8
 z0_0 = np.array([0, 10**(-n)])
 
-ts_0, ys_0 = fehlberg(z0_0, t0_0, T_0, model, Nmax, tol)
+ts_0, ys_0 = ODE_solver(z0_0, t0_0, T_0, model, Nmax, tol)
 
 ## SECOND, solve from tau = limit to tau = 1
 t0_1, T_1 = ts_0[-1], 1
 z0_1 = ys_0[-1]
 
-ts_1, ys_1 = fehlberg(z0_1, t0_1, T_1, model, Nmax, tol)
+ts_1, ys_1 = ODE_solver(z0_1, t0_1, T_1, model, Nmax, tol)
 
 
 ## MERGE the two solutions

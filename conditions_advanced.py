@@ -3,6 +3,21 @@ import matplotlib.pyplot as plt
 
 from scipy.interpolate import interp1d
 
+from values import rho_seawater, Mm_Cl
+
+### CONCENTRATIONS
+
+def OH_conc(pH):
+    return (10**(-14 + pH))*1000    # [mol/m3]
+
+def H_conc(pH):
+    return 10**(-pH)*1000           # [mol/m3]
+
+def Cl_conc(sal):
+    return 0.55 * sal * rho_seawater / Mm_Cl    # [mol/m3]
+
+
+### 20 DAYS VOYAGE ###
 
 time = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
@@ -12,9 +27,10 @@ salinity = [35.46, 35.38, 35.57, 35.76, 35.81, 35.69, 35.45, 35.15, 34.86, 34.67
 
 pH = [8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 7.95, 7.78, 7.64, 7.53, 7.4] 
 
-p_temperature = interp1d(time, temperatures)
-p_salinity = interp1d(time, salinity)
-p_pH = interp1d(time, pH)
+# Using interpolation
+p_20_temp = interp1d(time, temperatures)
+p_20_sal = interp1d(time, salinity)
+p_20_pH = interp1d(time, pH)
 
 # plt.plot(time, p_temperature(time), label="interpolation")
 # plt.plot(time, temperatures, 'o')
@@ -22,3 +38,15 @@ p_pH = interp1d(time, pH)
 # plt.xlabel("Time [days]")
 # plt.ylabel("Temperature [K]")
 # plt.show()
+
+
+
+### FIRST 400 DAYS ###
+def p_400_temp(t):
+    return temperatures[0]
+
+def p_400_sal(t):
+    return salinity[0]
+
+def p_400_pH(t):
+    return pH[0]
