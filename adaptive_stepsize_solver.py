@@ -67,14 +67,13 @@ class EmbeddedExplicitRungeKutta:
                 y_next = y + dt*dyhat
                 t_next = t + dt
 
+                # Force solution to not be more than 1
                 if (y_next[0] > 1):
                     y_next[0] = 1
                 
                 if (y_next[1] > 1):
                     y_next[1] = 1
 
-                # if (t_next > 1):
-                #     t_next = 1
 
                 ys.append(y_next)
                 ts.append(t_next)    
@@ -96,7 +95,7 @@ class EmbeddedExplicitRungeKutta:
         
         return (np.array(ts), np.array(ys))
 
-# end of class EmbeddedExplicitRungeKutta
+
 
 ### FEHLBERG-RUNGEKUTTA BUTCHER TABLEAU
 a =  np.array([[0.0, 0,   0,   0,   0],
