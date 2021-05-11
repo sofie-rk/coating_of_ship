@@ -20,11 +20,11 @@ model = MODEL()
 # Run method
 tol = 1.0e-15 # Tolerance in adaptive method
 n = 100
-Nmax = 10**(n+8)
+Nmax = 10**(n+25)
 
 
 ### FIRST, solve from tau = 0 to an upper limit
-t0_0, T_0 = 0, 0.8
+t0_0, T_0 = 0, 0.9
 z0_0 = np.array([0, 10**(-n)])
 
 ts_0, ys_0 = ODE_solver(z0_0, t0_0, T_0, model, Nmax, tol)

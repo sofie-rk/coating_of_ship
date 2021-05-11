@@ -37,12 +37,12 @@ def plot_release_Cu():
 
     for i in range(len(r_Cu2O_simple)):
 
-        r_Cu2O_simple[i] = 2 * D_CuCl*C_CuCl_s/(L_F*(X_simple[i][1] - X_simple[i][0])) * M_Cu * 10**(-4) # [micro g/cm2 day]
+        r_Cu2O_simple[i] = D_CuCl*C_CuCl_s/(L_F*(X_simple[i][1] - X_simple[i][0])) * M_Cu * 10**(-4) # [micro g/cm2 day]
     
     plt.plot(tau_simple[:]*tf_simple, r_Cu2O_simple[:])
     plt.xlabel(x_label_day)
     plt.ylabel(release_Cu_label)
-    plt.ylim(20, 40)
+    plt.ylim(0, 50)
     plt.grid(True)
     plt.show()
 

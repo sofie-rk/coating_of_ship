@@ -48,7 +48,7 @@ def release_Cu_400():
 
         t = t_400[i]
 
-        r_Cu[i] = 2 * r_Cu2O_advanced(p_400_temp(t), p_400_pH(t), p_400_sal(t), y_400[i][1], y_400[i][0]) * M_Cu * 10**(-4) # [micro g/cm2 day]
+        r_Cu[i] = r_Cu2O_advanced(p_400_temp(t), p_400_pH(t), p_400_sal(t), y_400[i][1], y_400[i][0]) * M_Cu * 10**(-4) # [micro g/cm2 day]
 
     
     plt.plot(t_400, r_Cu)
@@ -96,7 +96,7 @@ def release_Cu_20():
 
         t = t_20[i]
 
-        r_Cu[i] = 2* r_Cu2O_advanced(p_20_temp(t), p_20_pH(t), p_20_sal(t), y_20[i][1], y_20[i][0]) * M_Cu * 10**(-4) # [micro g/cm2 day]
+        r_Cu[i] = r_Cu2O_advanced(p_20_temp(t), p_20_pH(t), p_20_sal(t), y_20[i][1], y_20[i][0]) * M_Cu * 10**(-4) # [micro g/cm2 day]
 
     
     plt.plot(t_20, r_Cu)
@@ -125,9 +125,9 @@ def release_Cu_420():
         t = t_420[i]
 
         if t<400:
-            r_Cu[i] = 2 * r_Cu2O_advanced(p_400_temp(t), p_400_pH(t), p_400_sal(t), y_420[i][1], y_420[i][0]) * M_Cu * 10**(-4) # [micro g/cm2 day]
+            r_Cu[i] = r_Cu2O_advanced(p_400_temp(t), p_400_pH(t), p_400_sal(t), y_420[i][1], y_420[i][0]) * M_Cu * 10**(-4) # [micro g/cm2 day]
         else:
-            r_Cu[i] = 2 * r_Cu2O_advanced(p_20_temp(t-400), p_20_pH(t-400), p_20_sal(t-400), y_420[i][1], y_420[i][0]) * M_Cu * 10**(-4) # [micro g/cm2 day]
+            r_Cu[i] = r_Cu2O_advanced(p_20_temp(t-400), p_20_pH(t-400), p_20_sal(t-400), y_420[i][1], y_420[i][0]) * M_Cu * 10**(-4) # [micro g/cm2 day]
 
     
     plt.plot(t_420, r_Cu)
@@ -139,16 +139,15 @@ def release_Cu_420():
 
 
 
-
-# plot_conversion_400()
+plot_conversion_400()
 # # plot_length_400()
 # thickness_leached_layer_400()
 release_Cu_400()
 
-# plot_conversion_20()
+plot_conversion_20()
 # # plot_length_20()
 # plot_thickness_20()
 release_Cu_20()
 
-# plot_conversion_420()
+plot_conversion_420()
 release_Cu_420()
