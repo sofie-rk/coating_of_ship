@@ -10,21 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-
-def find_tf_average():
-
-    tf = 0
-    for i in range(len(tau_i)):
-        r_TBT_i = r_TBT_advanced(temp_i[i], pH_i[i], sal_i[i])
-        #print("t_f: ", t_f(r_TBT_i))
-        tf += t_f(r_TBT_i)
-    tf = tf/len(tau_i)
-    print("Average t_F: ", tf)
-
-    return tf
-
-
-#tf_average = find_tf_average()-5000
+# Choosing tf average to be equal to the simple tf
 tf_average = tf_simple
 
 
@@ -57,13 +43,13 @@ tol = 10e-10
 n = 100
 Nmax = 10**(n+15)
 
-sensitivity_model = IDEALIZED_ROUTE(p_i_temp, p_i_sal, p_i_pH)
+idealized_route_model = IDEALIZED_ROUTE(p_i_temp, p_i_sal, p_i_pH)
 
 t0_s, T_end_s = 0, 0.999
 
 z0_s = np.array([0, 10**(-n)])
 
-t_s, y_s = ODE_solver(z0_s, t0_s, T_end_s, sensitivity_model, Nmax, tol)
+t_s, y_s = ODE_solver(z0_s, t0_s, T_end_s, idealized_route_model, Nmax, tol)
 
 def plot_conversion_idealized():
 
