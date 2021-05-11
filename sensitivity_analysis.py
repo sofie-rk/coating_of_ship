@@ -35,9 +35,7 @@ def pH_s(tau):
         return 7.4
 
 
-def t_f(r_TBT_i):
-    #print("r_TBT_i: ", r_TBT_i)
-    return (L_F*M_TBT*rho_p*V_p)/(r_TBT_i * M_unit)
+
 
 
 def find_tf_average():
@@ -58,7 +56,7 @@ def find_tf_average():
     return tf
 
 
-tf_average = find_tf_average() - 5000
+tf_average = find_tf_average() - 2000
 
 class SENSITIVTY_ANALYSIS_MODEL:
 
