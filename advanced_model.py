@@ -59,22 +59,23 @@ class ADVANCED_MODEL:
         r_TBT = r_TBT_advanced(self.T(t), self.pH(t), self.salinity(t))
         r_Cu2O = r_Cu2O_advanced(self.T(t), self.pH(t), self.salinity(t), lc, lp)
 
-        #t_test = (L_F*M_TBT*rho_p*V_p)/(r_TBT * M_unit)
-
         dlpdt = (M_unit * r_TBT) / (M_TBT * rho_p * V_p)
 
         dlcdt = (M_Cu2O*r_Cu2O)/(2*V_c*rho_c) 
 
         return np.array([dlpdt, dlcdt])
 
-        
+
+
+
+
 # Run method
 fehlberg = EmbeddedExplicitRungeKutta(a, b, c, bhat, order)
 tol = 10e-20
 n = 100
 Nmax = 10**(n+10)
 
-
+### FIRST 400 days
 ### 400 days, Bueno Aires coastline
 def p_400_temp(t):
     return temperatures[0]
@@ -94,41 +95,7 @@ l0_400 = np.array([0, 10**(-n)])
 t_400, y_400 = fehlberg(l0_400, t0_400, T_end_400, model_400, Nmax, tol)
 
 
-def plot_conversion_400():
-    plt.plot(t_400, y_400/L_F)
-    plt.legend(["$X_p$", "$X_c$"])
-    plt.grid(True)
-    plt.ylabel("Conversion [-]")
-    plt.xlabel("Time [days]")
-    plt.title("Conversion vs time, advanced model. Normal model used.")
-    plt.show()
 
-
-def plot_length_400():
-    plt.plot(t_400, y_400*10**3)
-    plt.legend(["$l_p$", "$l_c$"])
-    plt.grid(True)
-    plt.ylabel("Length of the moving fronts [mm]")
-    plt.xlabel("Time [days]")
-    plt.title("Length of front, advanced model. Normal model used.")
-    plt.show()
-
-
-def thickness_leached_layer_400():
-    thickness = np.zeros(len(t_400))
-    for i in range(len(t_400)):
-        thickness[i] = y_400[i][1] - y_400[i][0]
-
-    plt.plot(t_400, thickness*10**3)
-    plt.xlabel("Time [days]")
-    plt.ylabel("Thickness [mm]")
-    plt.title("Thickness of the leached layer, advanced. Normal model used.")
-    plt.grid(True)
-    plt.show()
-
-# plot_conversion_400()
-# # plot_length_400()
-# thickness_leached_layer_400()
 
 
 ### THE NEXT 20 DAYS
