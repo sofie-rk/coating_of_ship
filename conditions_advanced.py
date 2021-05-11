@@ -27,17 +27,12 @@ salinity = [35.46, 35.38, 35.57, 35.76, 35.81, 35.69, 35.45, 35.15, 34.86, 34.67
 
 pH = [8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 7.95, 7.78, 7.64, 7.53, 7.4] 
 
-# Using interpolation
+# Using interpolation to find temperature, salinity and pH as a function of time
 p_20_temp = interp1d(time, temperatures)
 p_20_sal = interp1d(time, salinity)
 p_20_pH = interp1d(time, pH)
 
-# plt.plot(time, p_temperature(time), label="interpolation")
-# plt.plot(time, temperatures, 'o')
-# plt.legend()
-# plt.xlabel("Time [days]")
-# plt.ylabel("Temperature [K]")
-# plt.show()
+
 
 
 
@@ -59,6 +54,7 @@ temp_i = [10+273, 10+273, 10+273, 15+273, 20+273, 20+273, 20+273, 20+273, 20+273
 sal_i = [35.1, 35.1, 35.1, 35.1, 35.1, 40.1, 45.1, 45.1, 45.1, ]
 pH_i = [8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 7.8, 7.4]
 
+# Using interpolation to find temperature, salinity and pH as a function of time
 p_i_temp = interp1d(tau_i, temp_i)
 p_i_sal = interp1d(tau_i, sal_i)
 p_i_pH = interp1d(tau_i, pH_i)
