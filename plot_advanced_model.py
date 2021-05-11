@@ -15,7 +15,6 @@ def plot_conversion_400():
     plt.grid(True)
     plt.ylabel("Conversion [-]")
     plt.xlabel("Time [days]")
-    plt.title("Conversion vs time, advanced model. Normal model used.")
     plt.show()
 
 
@@ -25,7 +24,6 @@ def plot_length_400():
     plt.grid(True)
     plt.ylabel("Length of the moving fronts [mm]")
     plt.xlabel("Time [days]")
-    plt.title("Length of front, advanced model. Normal model used.")
     plt.show()
 
 
@@ -35,9 +33,8 @@ def thickness_leached_layer_400():
         thickness[i] = y_400[i][1] - y_400[i][0]
 
     plt.plot(t_400, thickness*10**3)
-    plt.xlabel("Time [days]")
-    plt.ylabel("Thickness [mm]")
-    plt.title("Thickness of the leached layer, advanced. Normal model used.")
+    plt.xlabel(x_label_day)
+    plt.ylabel("Thickness of leached layer [mm]")
     plt.grid(True)
     plt.show()
 
@@ -55,6 +52,7 @@ def release_Cu_400():
     plt.xlabel(x_label_day)
     plt.ylabel(release_Cu_label)
     plt.grid(True)
+    plt.ylim(0,60)
     plt.show()
 
 
@@ -134,6 +132,7 @@ def release_Cu_420():
     plt.xlabel(x_label_day)
     plt.ylabel(release_Cu_label)
     plt.grid(True)
+    plt.ylim(0,60)
     plt.show()
 
 
@@ -141,12 +140,12 @@ def release_Cu_420():
 
 plot_conversion_400()
 # # plot_length_400()
-# thickness_leached_layer_400()
+thickness_leached_layer_400()
 release_Cu_400()
 
 plot_conversion_20()
 # # plot_length_20()
-# plot_thickness_20()
+plot_thickness_20()
 release_Cu_20()
 
 plot_conversion_420()

@@ -10,41 +10,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def T_s(tau):
-    if (tau<0.375):
-        return 10+273
-    elif (tau>=0.375 and tau<0.5):
-        return 15+273
-    elif (tau>=0.5 and tau<=1):
-        return 20+273
-
-def sal_s(tau):
-    if (tau<0.625):
-        return 35.1
-    elif (tau>=0.625 and tau<0.750):
-        return 40.1
-    elif (tau>=0.750 and tau<=1):
-        return 45.1
-
-
-def pH_s(tau):
-    if (tau<0.875):
-        return 8.2
-    elif (tau>=0.875 and tau<1):
-        return 7.8
-    elif (tau >= 1):
-        return 7.4
-
-
-
-
 
 def find_tf_average():
-
-    # tau = [0, 0.125, 0.250, 0.375, 0.5, 0.625, 0.75, 0.875, 1]
-    # temp = [10+273, 10+273, 10+273, 15+273, 20+273, 20+273, 20+273, 20+273, 20+273]
-    # sal = [35.1, 35.1, 35.1, 35.1, 35.1, 40.1, 45.1, 45.1, 45.1]
-    # pH = [8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 8.2, 7.8, 7.4]
 
     tf = 0
     for i in range(len(tau_i)):
@@ -61,7 +28,7 @@ def find_tf_average():
 tf_average = tf_simple
 
 
-class SENSITIVTY_ANALYSIS_MODEL:
+class IDEALIZED_ROUTE:
 
     def __init__(self, T, salinity, pH):
         self.T = T
@@ -90,7 +57,7 @@ tol = 10e-10
 n = 100
 Nmax = 10**(n+15)
 
-sensitivity_model = SENSITIVTY_ANALYSIS_MODEL(p_i_temp, p_i_sal, p_i_pH)
+sensitivity_model = IDEALIZED_ROUTE(p_i_temp, p_i_sal, p_i_pH)
 
 t0_s, T_end_s = 0, 0.999
 
@@ -101,14 +68,15 @@ t_s, y_s = ODE_solver(z0_s, t0_s, T_end_s, sensitivity_model, Nmax, tol)
 def plot_conversion_idealized():
 
     plt.plot(t_s, y_s)
-    plt.plot([0.375, 0.375],[0, 1], '--', color="black")
-    plt.plot([0.500, 0.500],[0, 1], '--', color="black")
-    plt.plot([0.625, 0.625],[0, 1], '--', color="black")
-    plt.plot([0.750, 0.750],[0, 1], '--', color="black")
-    plt.plot([0.875, 0.875],[0, 1], '--', color="black")
+    plt.plot([0.375, 0.375],[0, 0.7], '--', color="black")
+    plt.plot([0.500, 0.500],[0, 0.7], '--', color="black")
+    plt.plot([0.625, 0.625],[0, 0.7], '--', color="black")
+    plt.plot([0.750, 0.750],[0, 0.7], '--', color="black")
+    plt.plot([0.875, 0.875],[0, 0.7], '--', color="black")
     plt.legend(conversion_legend)
     plt.grid(True)
-    plt.xlabel("Tau [-]")
+    plt.ylim(0, 0.75)
+    plt.xlabel(tau_label)
     plt.ylabel(conversion_label)
     plt.show()
 
@@ -130,6 +98,7 @@ def plot_release_Cu():
     plt.xlabel("Tau [-]")
     plt.ylabel(release_Cu_label)
     plt.grid(True)
+    plt.ylim(0,40)
     plt.show()
 
 plot_conversion_idealized()

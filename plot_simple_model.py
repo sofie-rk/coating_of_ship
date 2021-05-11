@@ -24,9 +24,9 @@ def plot_thickness_simple():
     for i in range(len(tau_simple)):
         thickness[i] = (X_simple[i][1] - X_simple[i][0]) * L_F * 10**3  #[mm]
     plt.plot(tau_simple[:]*tf_simple, thickness[:])
-    plt.title("Thickness of leached layer. Simple model. Dimensionless model used.")
     plt.xlabel(x_label_day)
     plt.ylabel("$l_c - l_p$ [mm]")
+    plt.grid(True)
     plt.show()
 
 
@@ -42,9 +42,10 @@ def plot_release_Cu():
     plt.plot(tau_simple[:]*tf_simple, r_Cu2O_simple[:])
     plt.xlabel(x_label_day)
     plt.ylabel(release_Cu_label)
-    plt.ylim(0, 50)
+    plt.ylim(0, 40)
     plt.grid(True)
     plt.show()
 
 plot_conversion_simple()
+plot_thickness_simple()
 plot_release_Cu()
