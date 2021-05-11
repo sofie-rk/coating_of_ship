@@ -5,6 +5,7 @@ conversion_legend = ["$X_p$", "$X_c$"]
 release_Cu_label = r"Release of $Cu^{2+}$  [$\mu$ g / $cm^2$ day]"
 Xp_label = "$X_p$"
 Xc_label = "$X_c$"
+thickness_label = "Thickness of leached layer [mm]"
 
 def temp_label(T):
     return "T = " + str(T-273) + "$^o$C"
