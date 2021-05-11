@@ -1,4 +1,3 @@
-#from idealized_route import SENSITIVTY_ANALYSIS_MODEL
 from adaptive_stepsize_solver import ODE_solver
 
 from values import L_F, M_unit, rho_p, V_p, rho_c, V_c, M_Cu2O, t_f, M_TBT, M_Cu
@@ -85,8 +84,6 @@ def varying_temperature():
 
 def varying_salinity():
 
-    print("STARTING SENSITIVITY ANALYSIS - SALANITY")
-
     salinities = [35, 40, 45]
 
     pH_fixed = 8.2
@@ -133,8 +130,6 @@ def varying_salinity():
 
 
 def varying_pH():
-
-    print("SENSITIVTY ANALYSIS - pH")
 
     pHs = [7.5, 8, 8.5]
 
@@ -240,8 +235,6 @@ def release_sensitivity():
             
         pH_ax.plot(t_s[:]*tf_c, r_Cu[:], label=pH_label(pH))
 
-
-
     y_lim_upper=20
 
     T_ax.set(ylim = (0,y_lim_upper))
@@ -265,11 +258,11 @@ def release_sensitivity():
 
     plt.show()
 
-#varying_temperature()
-#varying_salinity()
+varying_temperature()
+varying_salinity()
 varying_pH()
 
-#release_sensitivity()
+release_sensitivity()
 
 
     
