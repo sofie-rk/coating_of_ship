@@ -17,6 +17,8 @@ def plot_conversion_400():
     plt.xlabel("Time [days]")
     plt.show()
 
+    #print("Advanced, conversion after 400 days: ", y_400[-1]/L_F)
+
 
 def plot_length_400():
     plt.plot(t_400, y_400*10**3)
@@ -55,6 +57,7 @@ def release_Cu_400():
     plt.ylim(0,60)
     plt.show()
 
+    #print("Advanced, release rate after 400 days: ", r_Cu[-1])
 
 
 ### 20 day voyage
@@ -134,6 +137,8 @@ def release_Cu_420():
     plt.grid(True)
     plt.ylim(0,60)
     plt.show()
+
+    print("Release after 420 days: ", r_Cu[-1])
 
 
 

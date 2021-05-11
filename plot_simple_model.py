@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def plot_conversion_simple():
-    # Plotting conversion of polymer can Cu2O vs time
+    # Plotting conversion of polymer and Cu2O vs time
     plt.plot(tau_simple*tf_simple, X_simple)
     plt.legend(conversion_legend)
     plt.ylabel(conversion_label)
@@ -45,6 +45,7 @@ def plot_release_Cu():
     plt.ylim(0, 40)
     plt.grid(True)
     plt.show()
+
 
 plot_conversion_simple()
 plot_thickness_simple()
