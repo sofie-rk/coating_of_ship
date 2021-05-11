@@ -2,8 +2,7 @@ from values import *
 
 from advanced_model import r_TBT_advanced, r_Cu2O_advanced
 
-from adaptive_stepsize_solver import EmbeddedExplicitRungeKutta
-from adaptive_stepsize_solver import a, b, c, bhat, order
+from adaptive_stepsize_solver import ODE_solver
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -56,7 +55,7 @@ def find_tf_average():
     return tf
 
 
-tf_average = find_tf_average() - 2000
+tf_average = find_tf_average()
 
 class SENSITIVTY_ANALYSIS_MODEL:
 
@@ -65,10 +64,10 @@ class SENSITIVTY_ANALYSIS_MODEL:
         self.salinity = salinity
         self.pH = pH
 
-    def __call__(self, t, l):
+    def __call__(self, t, z):
 
-        zp = l[0]
-        zc = l[1]
+        zp = z[0]
+        zc = z[1]
 
         lc = zc*L_F
         lp = zp*L_F
@@ -78,15 +77,14 @@ class SENSITIVTY_ANALYSIS_MODEL:
 
         dzpdt = tf_average * (M_unit * r_TBT) / (L_F * M_TBT * rho_p * V_p)
 
-        dzcdt = tf_average * (M_Cu2O*r_Cu2O)/(2*V_c*rho_c) 
+        dzcdt = tf_average * (M_Cu2O*r_Cu2O)/(2*V_c*rho_c*L_F) 
 
         return np.array([dzpdt, dzcdt])
 
 # Run method
-fehlberg = EmbeddedExplicitRungeKutta(a, b, c, bhat, order)
 tol = 10e-10
 n = 100
-Nmax = 10**(n+10)
+Nmax = 10**(n+15)
 
 sensitivity_model = SENSITIVTY_ANALYSIS_MODEL(T_s, sal_s, pH_s)
 
@@ -94,14 +92,14 @@ t0_s, T_end_s = 0, 0.999
 
 z0_s = np.array([0, 10**(-n)])
 
-t_s, y_s = fehlberg(z0_s, t0_s, T_end_s, sensitivity_model, Nmax, tol)
+t_s, y_s = ODE_solver(z0_s, t0_s, T_end_s, sensitivity_model, Nmax, tol)
 
 plt.plot(t_s, y_s)
-# plt.plot([0.375, 0.375],[0, 1], color="black")
-# plt.plot([0.500, 0.500],[0, 1], color="black")
-# plt.plot([0.625, 0.625],[0, 1], color="black")
-# plt.plot([0.750, 0.750],[0, 1], color="black")
-# plt.plot([0.875, 0.875],[0, 1], color="black")
+plt.plot([0.375, 0.375],[0, 1], color="black")
+plt.plot([0.500, 0.500],[0, 1], color="black")
+plt.plot([0.625, 0.625],[0, 1], color="black")
+plt.plot([0.750, 0.750],[0, 1], color="black")
+plt.plot([0.875, 0.875],[0, 1], color="black")
 plt.legend(["$X_p$", "$X_c$"])
 plt.grid(True)
 plt.xlabel("Tau [-]")
