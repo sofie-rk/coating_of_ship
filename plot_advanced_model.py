@@ -17,16 +17,6 @@ def plot_conversion_400():
     plt.xlabel("Time [days]")
     plt.show()
 
-    #print("Advanced, conversion after 400 days: ", y_400[-1]/L_F)
-
-
-def plot_length_400():
-    plt.plot(t_400, y_400*10**3)
-    plt.legend(["$l_p$", "$l_c$"])
-    plt.grid(True)
-    plt.ylabel("Length of the moving fronts [mm]")
-    plt.xlabel("Time [days]")
-    plt.show()
 
 
 def thickness_leached_layer_400():
@@ -36,7 +26,7 @@ def thickness_leached_layer_400():
 
     plt.plot(t_400, thickness*10**3)
     plt.xlabel(x_label_day)
-    plt.ylabel("Thickness of leached layer [mm]")
+    plt.ylabel(thickness_label)
     plt.grid(True)
     plt.show()
 
@@ -44,11 +34,9 @@ def release_Cu_400():
     r_Cu = np.zeros(len(t_400))
 
     for i in range(len(r_Cu)):
-
         t = t_400[i]
 
         r_Cu[i] = r_Cu2O_advanced(p_400_temp(t), p_400_pH(t), p_400_sal(t), y_400[i][1], y_400[i][0]) * M_Cu * 10**(-4) # [micro g/cm2 day]
-
     
     plt.plot(t_400, r_Cu)
     plt.xlabel(x_label_day)
@@ -56,8 +44,6 @@ def release_Cu_400():
     plt.grid(True)
     plt.ylim(0,60)
     plt.show()
-
-    #print("Advanced, release rate after 400 days: ", r_Cu[-1])
 
 
 ### 20 day voyage
@@ -70,14 +56,6 @@ def plot_conversion_20():
     plt.xlabel(x_label_day)
     plt.show()
 
-def plot_length_20():
-    plt.plot(t_20, y_20*10**3)
-    plt.legend(["$l_p$", "$l_c$"])
-    plt.grid(True)
-    plt.ylabel("Length of moving fronts [mm]")
-    plt.xlabel(x_label_day)
-    plt.title("Length of moving fronts, voyage, advanced model. Normal model used.")
-    plt.show()
 
 def plot_thickness_20():
     thickness = np.zeros(len(t_20))
@@ -86,7 +64,7 @@ def plot_thickness_20():
 
     plt.plot(t_20, thickness*10**3)
     plt.xlabel(x_label_day)
-    plt.ylabel("Thickness [mm]")
+    plt.ylabel(thickness_label)
     plt.grid(True)
     plt.show()
 
@@ -144,12 +122,10 @@ def release_Cu_420():
 
 
 plot_conversion_400()
-# # plot_length_400()
 thickness_leached_layer_400()
 release_Cu_400()
 
 plot_conversion_20()
-# # plot_length_20()
 plot_thickness_20()
 release_Cu_20()
 
